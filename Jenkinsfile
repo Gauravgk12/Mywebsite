@@ -36,7 +36,7 @@ pipeline {
 
     post {
         success {
-            echo "Docker container '${CONTAINER_NAME}' is running on port 8080."
+            echo "Docker container '${CONTAINER_NAME}' is running on port 8090."
         }
         failure {
             echo "Something went wrong. Check the logs."
