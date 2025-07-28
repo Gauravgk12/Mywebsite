@@ -10,6 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 //git url: 'https://github.com/Gauravgk12/Mywebsite.git', branch: 'main'
+                echo "checkout"
             }
         }
 
