@@ -27,7 +27,7 @@ pipeline {
                     // Stop and remove if container already exists
                     sh """
                         docker rm -f ${CONTAINER_NAME} || true
-                        docker run -d --name ${CONTAINER_NAME} -p 8080:80 ${IMAGE_NAME}
+                        docker run -d --name ${CONTAINER_NAME} -p 8090:80 ${IMAGE_NAME}
                     """
                 }
             }
