@@ -1,46 +1,36 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "mywebsite-image"
-        CONTAINER_NAME = "mywebsite-container"
+    tools {
+        maven 'Maven-3'
+        jdk 'JDK-17'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                //git url: 'https://github.com/Gauravgk12/Mywebsite.git', branch: 'main'
-                echo "checkout"
+                checkout scm
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                script {
-                    docker.build(IMAGE_NAME)
-                }
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                script {
-                    // Stop and remove if container already exists
-                    sh """
-                        docker rm -f ${CONTAINER_NAME} || true
-                        docker run -d --name ${CONTAINER_NAME} -p 8090:80 ${IMAGE_NAME}
-                    """
-                }
+                sh '''
+                    mvn -version
+                    java -version
+                    mvn clean install
+                '''
             }
         }
     }
 
     post {
         success {
-            echo "Docker container '${CONTAINER_NAME}' is running on port 8090."
+            echo 'Build completed successfully'
         }
         failure {
-            echo "Something went wrong. Check the logs."
+            echo 'Build failed'
         }
     }
 }
+
